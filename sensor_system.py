@@ -149,10 +149,10 @@ class SensorSystem:
 
                 # Check the humidity sensor value and control the buzzer
                 if sensor_name == "humidity_1":
-                    if value > 70:
+                    if value > 80:
                         self.buzzer.set_state(1)
                         self.previous_humidity_high = True
-                    elif value <= 70 and self.previous_humidity_high:
+                    elif value <= 80 and self.previous_humidity_high:
                         self.buzzer.set_state(0)
                         self.previous_humidity_high = False
 
@@ -162,20 +162,10 @@ class SensorSystem:
         while True:
             if self.data_changed:  # Check if data has changed
                 self.display.show_data(self.data)  # Update the display
+                print(self.data)
                 self.data_changed = False  # Reset the flag
             sleep(1)  # Adjust sleep time as needed
-
-    def run(self):
-        try:
-            while True:
-                if self.data_changed:  # Check if data has changed
-                    print(self.data)
-                sleep(1)
-        except KeyboardInterrupt:
-            print("Program terminated by user.")
-            GPIO.cleanup()
 
 
 if __name__ == "__main__":
     system = SensorSystem()
-    system.run()
