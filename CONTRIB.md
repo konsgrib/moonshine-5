@@ -1,6 +1,8 @@
 python -m vnv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
+probably this will be needed as well:
+pip install Adafruit_DHT --install-option="--force-pi"
 
 sudo raspi-config
 |_
