@@ -1,0 +1,44 @@
+sensors:
+  temperature_sensors:
+    ts1: "28-42f7d445552f"
+    ts2: "28-5be6d445359c"
+  humidity_sensor:
+    hs: 14
+  buttons:
+    bt1: 9
+    bt2: 10
+    bt3: 11
+  buzzer:
+    buz: 26
+  relays:
+    valve_1: 6
+    valve_2: 5
+    cooler: 13
+    power: 19
+    power_up: 23
+    power_down: 24
+  water_level_sensors:
+    ws1: 17
+    ws2: 27
+  display:
+    data_pin: 7
+    clk_pin: 8
+    reset_pin: 25
+  messenger_file:
+    file_path: "status.txt"
+
+program_parameters:
+  wait_times:
+    wait_1: 5  # 1 minutes
+    wait_2: 24  # 40 minutes
+    repeat_wait: 0.5  # 0.5 seconds
+    cooler-stop-delay: 30  # 30 seconds
+    power_dec_pressed_time: 0.05  # 0.15 seconds
+    power_inc_pressed_time: 10  # 0.15 seconds
+    warming-time-seconds: 30  # 60 seconds
+    work-time-seconds: 30  # 60 seconds
+  temperature_thresholds:
+    min_temperature: 25.2
+    max_temperature: 28.5
+    power-off-cycle_one: 30
+  humidity_threshold: 80

@@ -1,0 +1,14 @@
+[Unit]
+Description=Sensor System Service
+After=network.target
+
+[Service]
+ExecStart=/home/pi/Projects/moonshine-5/.venv/bin/python /home/pi/Projects/moonshine-5/sensor_system.py
+WorkingDirectory=/home/pi/Projects/moonshine-5
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

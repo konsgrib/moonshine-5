@@ -1,0 +1,137 @@
+program3: # change this name to program1 so you can calibrate timings
+  steps:
+    - action: "set_relay"
+      relay: "relay_pwr"
+      state: 1
+    - action: "repeat"
+      count: 1
+      steps:
+        - action: "set_relay"
+          relay: "relay_up"
+          state: 1
+        - action: "wait"
+          duration: power_inc_pressed_time 
+        - action: "set_relay"
+          relay: "relay_up"
+          state: 0
+    - action: "repeat"
+      count: 30
+      steps:
+        - action: "set_relay"
+          relay: "relay_down"
+          state: 1
+        - action: "wait"
+          duration: power_dec_pressed_time 
+        - action: "set_relay"
+          relay: "relay_down"
+          state: 0
+        - action: "wait"
+          duration: power_dec_pressed_time
+    - action: "set_relay"
+      relay: "relay_pwr"
+      state: 0
+program1:
+  steps:
+    - action: "set_relay"
+      relay: "relay_pwr"
+      state: 1
+    - action: "repeat"
+      count: 40
+      steps:
+        - action: "set_relay"
+          relay: "relay_up"
+          state: 1
+        - action: "wait"
+          duration: power_inc_dec_pressed_time 
+        - action: "set_relay"
+          relay: "relay_up"
+          state: 0
+        - action: "wait"
+          duration: power_inc_dec_pressed_time 
+    - action: "wait_for_temperature"
+      sensor: "termo_1"
+      threshold: min_temperature    
+    - action: "set_relay"
+      relay: "relay_clr"
+      state: 1
+    - action: "wait_for_temperature"
+      sensor: "termo_1"
+      threshold: power-off-cycle_one   
+    - action: "set_relay"
+      relay: "relay_pwr"
+      state: 0
+    - action: "wait"
+      duration: cooler-stop-delay 
+    - action: "set_relay"
+      relay: "relay_clr"
+      state: 0
+
+program2:
+  steps:
+    - action: "set_relay"
+      relay: "relay_pwr"
+      state: 1
+    - action: "repeat"
+      count: 40
+      steps:
+        - action: "set_relay"
+          relay: "relay_up"
+          state: 1
+        - action: "wait"
+          duration: power_inc_dec_pressed_time 
+        - action: "set_relay"
+          relay: "relay_up"
+          state: 0
+        - action: "wait"
+          duration: power_inc_dec_pressed_time
+    - action: "wait_for_temperature" #3
+      sensor: "termo_1"
+      threshold: min_temperature
+    - action: "set_relay" #4
+      relay: "relay_clr"
+      state: 1
+    - action: "wait_for_temperature" #5
+      sensor: "termo_2"
+      threshold: max_temperature
+    - action: "repeat"
+      count: 30
+      steps:
+        - action: "set_relay"
+          relay: "relay_down"
+          state: 1
+        - action: "wait"
+          duration: power_inc_dec_pressed_time 
+        - action: "set_relay"
+          relay: "relay_down"
+          state: 0
+        - action: "wait"
+          duration: power_inc_dec_pressed_time
+    - action: "wait" #7
+      duration: warming-time-seconds
+    - action: "set_relay" #8
+      relay: "relay_v1"
+      state: 1       
+    - action: "wait_for_liquid_level" #9
+      sensor: "water_1"
+      state: 1
+    - action: "set_relay" #10
+      relay: "relay_v1"
+      state: 0
+    - action: "set_relay" #11
+      relay: "relay_v2"
+      state: 1
+    - action: "wait" #12
+      duration: work-time-seconds
+    - action: "wait_for_average_temp_greater_than"  #13
+      sensor: "termo_2"
+    - action: "set_relay" #14
+      relay: "relay_pwr"
+      state: 0
+    - action: "wait" #15
+      duration: cooler-stop-delay
+    - action: "set_relay" #16
+      relay: "relay_clr"
+      state: 0
+    - action: "set_relay" #17
+      relay: "relay_v2"
+      state: 0
