@@ -1,4 +1,4 @@
-program3: # change this name to program1 so you can calibrate timings
+program1: # change this name to program1 so you can calibrate timings
   steps:
     - action: "set_relay"
       relay: "relay_pwr"
@@ -15,7 +15,7 @@ program3: # change this name to program1 so you can calibrate timings
           relay: "relay_up"
           state: 0
     - action: "repeat"
-      count: 30
+      count: 30 #Decrease power
       steps:
         - action: "set_relay"
           relay: "relay_down"
@@ -27,27 +27,27 @@ program3: # change this name to program1 so you can calibrate timings
           state: 0
         - action: "wait"
           duration: power_dec_pressed_time
+    - action: "wait"
+      duration: power_inc_pressed_time
     - action: "set_relay"
       relay: "relay_pwr"
       state: 0
-program1:
+program3:
   steps:
     - action: "set_relay"
       relay: "relay_pwr"
       state: 1
     - action: "repeat"
-      count: 40
+      count: 1
       steps:
         - action: "set_relay"
           relay: "relay_up"
           state: 1
         - action: "wait"
-          duration: power_inc_dec_pressed_time 
+          duration: power_inc_pressed_time 
         - action: "set_relay"
           relay: "relay_up"
           state: 0
-        - action: "wait"
-          duration: power_inc_dec_pressed_time 
     - action: "wait_for_temperature"
       sensor: "termo_1"
       threshold: min_temperature    
@@ -65,25 +65,22 @@ program1:
     - action: "set_relay"
       relay: "relay_clr"
       state: 0
-
 program2:
   steps:
     - action: "set_relay"
       relay: "relay_pwr"
       state: 1
     - action: "repeat"
-      count: 40
+      count: 1
       steps:
         - action: "set_relay"
           relay: "relay_up"
           state: 1
         - action: "wait"
-          duration: power_inc_dec_pressed_time 
+          duration: power_inc_pressed_time 
         - action: "set_relay"
           relay: "relay_up"
           state: 0
-        - action: "wait"
-          duration: power_inc_dec_pressed_time
     - action: "wait_for_temperature" #3
       sensor: "termo_1"
       threshold: min_temperature
@@ -100,12 +97,12 @@ program2:
           relay: "relay_down"
           state: 1
         - action: "wait"
-          duration: power_inc_dec_pressed_time 
+          duration: power_dec_pressed_time 
         - action: "set_relay"
           relay: "relay_down"
           state: 0
         - action: "wait"
-          duration: power_inc_dec_pressed_time
+          duration: power_dec_pressed_time
     - action: "wait" #7
       duration: warming-time-seconds
     - action: "set_relay" #8
